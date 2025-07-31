@@ -1,0 +1,6 @@
+# Migr8 Framework Requirements
+# Install with: pip install -r requirements.txt
+
+requests>=2.25.1
+colorama>=0.4.4
+validators>=0.18.2

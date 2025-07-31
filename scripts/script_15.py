@@ -1,4 +1,83 @@
-# Migr8 - Upload Vulnerability Reconnaissance Framework
+# Create requirements.txt
+requirements_content = '''# Migr8 Framework Requirements
+# Install with: pip install -r requirements.txt
+
+requests>=2.25.1
+colorama>=0.4.4
+validators>=0.18.2
+'''
+
+with open("migr8/requirements.txt", 'w') as f:
+    f.write(requirements_content)
+print("Created: migr8/requirements.txt")
+
+# Create setup.sh script
+setup_script = '''#!/bin/bash
+# Migr8 Framework Setup Script
+
+echo "========================================="
+echo "  Migr8 Framework Setup"
+echo "========================================="
+
+# Check if Python 3 is installed
+if ! command -v python3 &> /dev/null; then
+    echo "Error: Python 3 is not installed"
+    exit 1
+fi
+
+echo "[+] Python 3 found"
+
+# Check if pip is installed
+if ! command -v pip &> /dev/null && ! command -v pip3 &> /dev/null; then
+    echo "Error: pip is not installed"
+    exit 1
+fi
+
+echo "[+] pip found"
+
+# Install dependencies
+echo "[*] Installing Python dependencies..."
+if command -v pip3 &> /dev/null; then
+    pip3 install -r requirements.txt
+else
+    pip install -r requirements.txt
+fi
+
+if [ $? -eq 0 ]; then
+    echo "[+] Dependencies installed successfully"
+else
+    echo "[-] Error installing dependencies"
+    exit 1
+fi
+
+# Make main.py executable
+chmod +x main.py
+
+# Create symlink for easy access (optional)
+if [ -w /usr/local/bin ]; then
+    ln -sf "$(pwd)/main.py" /usr/local/bin/migr8
+    echo "[+] Created symlink: /usr/local/bin/migr8"
+fi
+
+echo ""
+echo "========================================="
+echo "  Setup Complete!"
+echo "========================================="
+echo ""
+echo "Usage examples:"
+echo "  python main.py --target http://example.com/upload.php --base http://example.com --mode basic"
+echo "  python main.py --base http://example.com --mode bruteforce --payload test.php"
+echo ""
+echo "For help: python main.py --help"
+echo ""
+'''
+
+with open("migr8/setup.sh", 'w') as f:
+    f.write(setup_script)
+print("Created: migr8/setup.sh")
+
+# Create README.md
+readme_content = '''# Migr8 - Upload Vulnerability Reconnaissance Framework
 
 A modular Python framework for testing file upload vulnerabilities with multiple bypass techniques and reconnaissance capabilities.
 
@@ -156,3 +235,8 @@ This framework is provided for educational and authorized testing purposes only.
 ## Contributing
 
 Contributions are welcome! Please follow clean coding practices and add appropriate documentation.
+'''
+
+with open("migr8/README.md", 'w') as f:
+    f.write(readme_content)
+print("Created: migr8/README.md")
